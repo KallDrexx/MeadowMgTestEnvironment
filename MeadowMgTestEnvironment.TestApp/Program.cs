@@ -18,7 +18,7 @@ environment.BindKey(Keys.Space,
 while (true)
 {
     renderer.Clear(Color.Black);
-    renderer.DrawRoundedRectangle(0, 0, 239, 239, 5, Color.Red);
+    renderer.DrawRoundedRectangle(0, 0, 240, 239, 5, Color.Red);
     renderer.DrawCircle(50, 50, 25, Color.Aqua);
     
     renderer.PenColor = Color.White;

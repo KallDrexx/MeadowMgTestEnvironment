@@ -52,15 +52,39 @@ internal class MonogameApp : Game
         
         _textureTransferer.SetTextureData(_texture);
         
-        
-
         _spriteBatch.Begin();
         _spriteBatch.Draw(_texture,
-            new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height),
+            ComputeDestinationRectangle(),
             new Rectangle(0, 0, _textureWidth, _textureHeight),
             Color.White);
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    private Rectangle ComputeDestinationRectangle()
+    {
+        var textureAspectRatio = (float)_textureWidth / _textureHeight;
+        var viewportAspectRatio = (float)GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Height;
+        var startX = 0;
+        var startY = 0;
+        int height, width;
+
+        if (textureAspectRatio > viewportAspectRatio)
+        {
+            // texture has a wider aspect ratio than the viewport, texture is width constrained.
+            width = GraphicsDevice.Viewport.Width;
+            height = (int)Math.Round(width * textureAspectRatio);
+            startY = (GraphicsDevice.Viewport.Height - height) / 2;
+        }
+        else
+        {
+            // Viewport has a wider aspect ratio than the texture, texture is height constrained.
+            height = GraphicsDevice.Viewport.Height;
+            width = (int)Math.Round(height * textureAspectRatio);
+            startX = (GraphicsDevice.Viewport.Width - width) / 2;
+        }
+
+        return new Rectangle(startX, startY, width, height);
     }
 }
