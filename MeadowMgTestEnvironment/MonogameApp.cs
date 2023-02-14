@@ -51,6 +51,8 @@ internal class MonogameApp : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         
         _textureTransferer.SetTextureData(_texture);
+        
+        
 
         _spriteBatch.Begin();
         _spriteBatch.Draw(_texture,

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Meadow.Foundation.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace MeadowMgTestEnvironment;
 
@@ -12,7 +13,7 @@ public class TestEnvironment
     {
         var textureTransferer = new TextureTransferer(width, height);
         var monogameApp = new MonogameApp(width, height, _inputTracker, textureTransferer);
-        Display = new MonogameDisplay(width, height, monogameApp, textureTransferer);
+        Display = new MonogameDisplay(width, height, textureTransferer, ColorMode.Format16bppRgb565);
         
         new Thread(() => monogameApp.Run()).Start();
         monogameApp.Exiting += (_, _) => Environment.Exit(0);

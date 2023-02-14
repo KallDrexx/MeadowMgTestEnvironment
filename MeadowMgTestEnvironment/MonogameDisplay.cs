@@ -6,7 +6,6 @@ namespace MeadowMgTestEnvironment;
 
 public class MonogameDisplay : IGraphicsDisplay
 {
-    private readonly MonogameApp _monogameApp;
     private readonly TextureTransferer _textureTransferer;
     
     public ColorMode ColorMode { get; }
@@ -17,16 +16,15 @@ public class MonogameDisplay : IGraphicsDisplay
 
     internal MonogameDisplay(int width, 
         int height, 
-        MonogameApp monogameApp,
-        TextureTransferer textureTransferer)
+        TextureTransferer textureTransferer,
+        ColorMode colorMode)
     {
-        _monogameApp = monogameApp;
         _textureTransferer = textureTransferer;
         Width = width;
         Height = height;
         
-        PixelBuffer = new BufferRgb565(width, height);
-        ColorMode = ColorMode.Format16bppRgb565;
+        ColorMode = colorMode;
+        PixelBuffer = GetBufferForColorMode(colorMode, width, height);
     }
     
     public void Show()
@@ -72,5 +70,21 @@ public class MonogameDisplay : IGraphicsDisplay
     public void WriteBuffer(int x, int y, IPixelBuffer displayBuffer)
     {
         throw new NotImplementedException();
+    }
+
+    private static IPixelBuffer GetBufferForColorMode(ColorMode colorMode, int width, int height)
+    {
+        return colorMode switch
+        {
+            ColorMode.Format1bpp => new Buffer1bpp(width, height),
+            ColorMode.Format4bppGray => new BufferGray4(width, height),
+            ColorMode.Format8bppGray => new BufferGray8(width, height),
+            ColorMode.Format8bppRgb332 => new BufferRgb332(width, height),
+            ColorMode.Format12bppRgb444 => new BufferRgb444(width, height),
+            ColorMode.Format16bppRgb565 => new BufferRgb565(width, height),
+            ColorMode.Format24bppRgb888 => new BufferRgb888(width, height),
+            ColorMode.Format32bppRgba8888 => new BufferRgb8888(width, height),
+            _ => throw new NotSupportedException($"Color mode {colorMode} is not supported"),
+        };
     }
 }
