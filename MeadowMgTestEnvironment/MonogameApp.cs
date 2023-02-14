@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,19 +9,23 @@ internal class MonogameApp : Game
     private readonly GraphicsDeviceManager _graphics;
     private readonly int _textureWidth, _textureHeight;
     private readonly InputTracker _inputTracker;
+    private readonly TextureTransferer _textureTransferer;
     private SpriteBatch _spriteBatch = null!;
     private Texture2D _texture = null!;
     
-    public ConcurrentQueue<byte[]> RgbaBufferQueue { get; } = new();
-    
-    public MonogameApp(int textureWidth, int textureHeight, InputTracker inputTracker)
+    public MonogameApp(int textureWidth, 
+        int textureHeight, 
+        InputTracker inputTracker,
+        TextureTransferer textureTransferer)
     {
         _inputTracker = inputTracker;
         _graphics = new GraphicsDeviceManager(this);
+        
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
         _textureWidth = textureWidth;
         _textureHeight = textureHeight;
+        _textureTransferer = textureTransferer;
     }
 
     protected override void LoadContent()
@@ -36,7 +39,6 @@ internal class MonogameApp : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
         {
             Exit();
-            Environment.Exit(0);
         }
         
         _inputTracker.CheckTrackedKeys();
@@ -47,18 +49,9 @@ internal class MonogameApp : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-
-        byte[]? newBuffer = null;
-        while (RgbaBufferQueue.TryDequeue(out var dequeuedBuffer))
-        {
-            newBuffer = dequeuedBuffer;
-        }
-
-        if (newBuffer != null)
-        {
-            _texture.SetData(newBuffer);
-        }
         
+        _textureTransferer.SetTextureData(_texture);
+
         _spriteBatch.Begin();
         _spriteBatch.Draw(_texture,
             new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height),

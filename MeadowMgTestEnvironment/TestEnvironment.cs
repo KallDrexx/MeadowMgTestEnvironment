@@ -5,16 +5,17 @@ namespace MeadowMgTestEnvironment;
 public class TestEnvironment
 {
     private readonly InputTracker _inputTracker = new();
-    private readonly MonogameApp _monogameApp;
-    
+
     public MonogameDisplay Display { get; }
 
     public TestEnvironment(int width, int height)
     {
-        _monogameApp = new MonogameApp(width, height, _inputTracker);
-        Display = new MonogameDisplay(width, height, _monogameApp);
+        var textureTransferer = new TextureTransferer(width, height);
+        var monogameApp = new MonogameApp(width, height, _inputTracker, textureTransferer);
+        Display = new MonogameDisplay(width, height, monogameApp, textureTransferer);
         
-        new Thread(() => _monogameApp.Run()).Start();
+        new Thread(() => monogameApp.Run()).Start();
+        monogameApp.Exiting += (_, _) => Environment.Exit(0);
     }
 
     public void BindKey(Keys key, Action onPress, Action onRelease)
