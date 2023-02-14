@@ -54,22 +54,32 @@ public class MonogameDisplay : IGraphicsDisplay
 
     public void DrawPixel(int x, int y, Color color)
     {
-        throw new NotImplementedException();
+        PixelBuffer.SetPixel(x, y, color);
     }
 
     public void DrawPixel(int x, int y, bool enabled)
     {
-        throw new NotImplementedException();
+        if (PixelBuffer is Buffer1bpp buffer)
+        {
+            buffer.SetPixel(x, y, enabled);
+        }
+        else
+        {
+            var message = "Setting a pixel to enabled/disabled is only possible on " +
+                          $"1bpp color modes, but this is currently in {ColorMode}";
+
+            throw new InvalidOperationException(message);
+        }
     }
 
     public void InvertPixel(int x, int y)
     {
-        throw new NotImplementedException();
+        PixelBuffer.InvertPixel(x, y);
     }
 
     public void WriteBuffer(int x, int y, IPixelBuffer displayBuffer)
     {
-        throw new NotImplementedException();
+        PixelBuffer.WriteBuffer(x, y, displayBuffer);
     }
 
     private static IPixelBuffer GetBufferForColorMode(ColorMode colorMode, int width, int height)

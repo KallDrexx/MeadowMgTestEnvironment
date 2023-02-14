@@ -18,11 +18,16 @@ environment.BindKey(Keys.Space,
 while (true)
 {
     renderer.Clear(Color.Black);
+    renderer.DrawRoundedRectangle(0, 0, 239, 239, 5, Color.Red);
+    renderer.DrawCircle(50, 50, 25, Color.Aqua);
+    
+    renderer.PenColor = Color.White;
     renderer.DrawText(10, 10, DateTime.Now.ToString("h:mm:ss.ffffff"));
     if (spacePressed)
     {
         renderer.DrawText(10, 200, "Space pressed!");
     }
+    
     
     renderer.Show();
     
