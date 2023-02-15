@@ -4,6 +4,10 @@ using Meadow.Foundation.Graphics.Buffers;
 
 namespace MeadowMgTestEnvironment;
 
+/// <summary>
+/// Meadow `IGraphicsDisplay` implementation that feeds it's display to the
+/// running Monogame window.
+/// </summary>
 public class MonogameDisplay : IGraphicsDisplay
 {
     private readonly TextureTransferer _textureTransferer;

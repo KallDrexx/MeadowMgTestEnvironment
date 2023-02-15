@@ -3,6 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MeadowMgTestEnvironment;
 
+/// <summary>
+/// Used to push pixel data from a pixel buffer to a Monogame Texture2d
+/// buffer, which can then be rendered inside monogame.
+/// </summary>
 internal class TextureTransferer
 {
     private readonly object _padlock = new();
@@ -13,6 +17,10 @@ internal class TextureTransferer
         _buffer = new BufferRgb8888(width, height);
     }
 
+    /// <summary>
+    /// Converts the pixel data into RGBA8888 (to be monogame compatible) and
+    /// saves the pixel data into storage.
+    /// </summary>
     public void PushToTexture(IPixelBuffer newData)
     {
         lock (_padlock)
@@ -30,6 +38,11 @@ internal class TextureTransferer
         }
     }
 
+    /// <summary>
+    /// Applies the currently saved RGBA8888 saved pixel data to the passed
+    /// in monogame texture.
+    /// </summary>
+    /// <param name="texture"></param>
     public void SetTextureData(Texture2D texture)
     {
         lock (_padlock)

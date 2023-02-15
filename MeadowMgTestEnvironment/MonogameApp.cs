@@ -4,6 +4,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MeadowMgTestEnvironment;
 
+/// <summary>
+/// Monogame application that handles managing input states (so input
+/// tracking can be done) and renders the currently pushed pixel data
+/// to the PC display.
+/// </summary>
 internal class MonogameApp : Game
 {
     private readonly GraphicsDeviceManager _graphics;
@@ -20,6 +25,7 @@ internal class MonogameApp : Game
     {
         _inputTracker = inputTracker;
         _graphics = new GraphicsDeviceManager(this);
+        Window.AllowUserResizing = true;
         
         Content.RootDirectory = "Content";
         IsMouseVisible = true;

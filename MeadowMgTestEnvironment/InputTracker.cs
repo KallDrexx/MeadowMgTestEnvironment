@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MeadowMgTestEnvironment;
 
-public class InputTracker
+internal class InputTracker
 {
     private readonly ConcurrentDictionary<Keys, TrackedKey> _trackedKeys = new();
 

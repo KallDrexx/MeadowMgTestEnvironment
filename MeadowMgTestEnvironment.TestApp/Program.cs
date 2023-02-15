@@ -3,7 +3,12 @@ using Meadow.Foundation.Graphics;
 using MeadowMgTestEnvironment;
 using Microsoft.Xna.Framework.Input;
 
+// Create the Monogame test environment that mimics a 240x240 pixel display
 var environment = new TestEnvironment(240, 240);
+
+// Create a new MicroGraphics instance, and have it push its pixel data
+// to the test environment's `IGraphicsDisplay` instance, so it renders
+// to the running Monogame window.
 var renderer = new MicroGraphics(environment.Display)
 {
     CurrentFont = new Font8x8()
@@ -11,6 +16,8 @@ var renderer = new MicroGraphics(environment.Display)
 
 var spacePressed = false;
 
+// When the user presses the space bar, set `spacePressed` to true.
+// Once the user releases the space bar, set it back to false.
 environment.BindKey(Keys.Space,
     () => spacePressed = true,
     () => spacePressed = false);
@@ -27,7 +34,6 @@ while (true)
     {
         renderer.DrawText(10, 200, "Space pressed!");
     }
-    
     
     renderer.Show();
     
