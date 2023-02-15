@@ -11,6 +11,14 @@ namespace MeadowMgTestEnvironment;
 public class MonogameDisplay : IGraphicsDisplay
 {
     private readonly TextureTransferer _textureTransferer;
+   
+    /// <summary>
+    /// How long to sleep after each `Show()` call. This can be used to emulate
+    /// similar timings that would be seen on a Meadow device itself. At a minimum
+    /// it prevents looping applications (such as games) from using too much
+    /// CPU resources due to running unrestricted.
+    /// </summary>
+    public TimeSpan SleepAfterShow { get; set; } = TimeSpan.FromMilliseconds(16);
     
     public ColorMode ColorMode { get; }
     public ColorMode SupportedColorModes => ColorMode;
@@ -34,6 +42,7 @@ public class MonogameDisplay : IGraphicsDisplay
     public void Show()
     {
         _textureTransferer.PushToTexture(PixelBuffer);
+        Thread.Sleep(SleepAfterShow);
     }
 
     public void Show(int left, int top, int right, int bottom)

@@ -4,7 +4,15 @@ using MeadowMgTestEnvironment;
 using Microsoft.Xna.Framework.Input;
 
 // Create the Monogame test environment that mimics a 240x240 pixel display
-var environment = new TestEnvironment(240, 240);
+var environment = new TestEnvironment(240, 240)
+{
+    Display =
+    {
+        // Make sure each `Show()` call on the display sleeps for 16ms, so that 
+        // the while loop only executes only 60 times a second.
+        SleepAfterShow = TimeSpan.FromMilliseconds(16),
+    }
+};
 
 // Create a new MicroGraphics instance, and have it push its pixel data
 // to the test environment's `IGraphicsDisplay` instance, so it renders
@@ -36,6 +44,4 @@ while (true)
     }
     
     renderer.Show();
-    
-    Thread.Sleep(16);
 }
