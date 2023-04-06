@@ -106,7 +106,7 @@ public class MonogameDisplay : IGraphicsDisplay
             ColorMode.Format12bppRgb444 => new BufferRgb444(width, height),
             ColorMode.Format16bppRgb565 => new BufferRgb565(width, height),
             ColorMode.Format24bppRgb888 => new BufferRgb888(width, height),
-            ColorMode.Format32bppRgba8888 => new BufferRgb8888(width, height),
+            ColorMode.Format32bppRgba8888 => new BufferRgba8888(width, height),
             _ => throw new NotSupportedException($"Color mode {colorMode} is not supported"),
         };
     }

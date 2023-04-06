@@ -10,11 +10,11 @@ namespace MeadowMgTestEnvironment;
 internal class TextureTransferer
 {
     private readonly object _padlock = new();
-    private readonly BufferRgb8888 _buffer;
+    private readonly BufferRgba8888 _buffer;
 
     public TextureTransferer(int width, int height)
     {
-        _buffer = new BufferRgb8888(width, height);
+        _buffer = new BufferRgba8888(width, height);
     }
 
     /// <summary>
