@@ -1,15 +1,19 @@
 ﻿using System.Collections.Concurrent;
+using Meadow.Hardware;
 using Microsoft.Xna.Framework.Input;
 
 namespace MeadowMgTestEnvironment;
 
 internal class InputTracker
 {
-    private readonly ConcurrentDictionary<Keys, TrackedKey> _trackedKeys = new();
+    private readonly ConcurrentDictionary<Keys, KeyboardPort> _trackedKeys = new();
 
-    public void RegisterKey(Keys key, Action onPress, Action onDepress)
+    public IDigitalInputPort RegisterKey(Keys key)
     {
-        _trackedKeys[key] = new TrackedKey(onPress, onDepress);
+        var port = new KeyboardPort();
+        _trackedKeys[key] = port;
+
+        return port;
     }
 
     public void CheckTrackedKeys()
@@ -18,37 +22,12 @@ internal class InputTracker
         var allKeys = _trackedKeys.Keys;
         foreach (var key in allKeys)
         {
-            if (!_trackedKeys.TryGetValue(key, out var state))
+            if (!_trackedKeys.TryGetValue(key, out var port))
             {
                 continue;
             }
-            
-            var isDown = keyboardState.IsKeyDown(key);
-            if (isDown != state.IsCurrentlyPressed)
-            {
-                state.IsCurrentlyPressed = isDown;
-                if (isDown)
-                {
-                    state.OnPress();
-                }
-                else
-                {
-                    state.OnDepress();
-                }
-            }
-        }
-    }
 
-    private class TrackedKey
-    {
-        public Action OnPress { get; }
-        public Action OnDepress { get; }
-        public bool IsCurrentlyPressed { get; set; }
-
-        public TrackedKey(Action onPress, Action onDepress)
-        {
-            OnPress = onPress;
-            OnDepress = onDepress;
+            port.State = keyboardState.IsKeyDown(key);
         }
     }
 }

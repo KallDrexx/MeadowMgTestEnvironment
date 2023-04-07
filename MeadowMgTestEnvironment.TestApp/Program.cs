@@ -26,9 +26,9 @@ var spacePressed = false;
 
 // When the user presses the space bar, set `spacePressed` to true.
 // Once the user releases the space bar, set it back to false.
-environment.BindKey(Keys.Space,
-    () => spacePressed = true,
-    () => spacePressed = false);
+var spaceButton = environment.BindKey(Keys.Space);
+spaceButton.PressStarted += (_, _) => spacePressed = true;
+spaceButton.PressEnded += (_, _) => spacePressed = false;
 
 while (true)
 {

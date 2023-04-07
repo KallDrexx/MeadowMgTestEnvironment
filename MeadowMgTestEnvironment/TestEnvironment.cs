@@ -1,4 +1,5 @@
 ﻿using Meadow.Foundation.Graphics;
+using Meadow.Foundation.Sensors.Buttons;
 using Microsoft.Xna.Framework.Input;
 
 namespace MeadowMgTestEnvironment;
@@ -34,12 +35,11 @@ public class TestEnvironment
     }
 
     /// <summary>
-    /// Executes an action when the user presses a keyboard key down, and when they release
-    /// the button. Actions only execute the first time a change in pressed/release state is
-    /// detected.
+    /// Creates a push button that's tracked to a Monogame keyboard press
     /// </summary>
-    public void BindKey(Keys key, Action onPress, Action onRelease)
+    public PushButton BindKey(Keys key)
     {
-        _inputTracker.RegisterKey(key, onPress, onRelease);
+        var port = _inputTracker.RegisterKey(key);
+        return new PushButton(port);
     }
 }
