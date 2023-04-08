@@ -1,5 +1,6 @@
 ﻿using Meadow.Foundation.Graphics;
 using Meadow.Foundation.Sensors.Buttons;
+using Meadow.Hardware;
 using Microsoft.Xna.Framework.Input;
 
 namespace MeadowMgTestEnvironment;
@@ -35,11 +36,10 @@ public class TestEnvironment
     }
 
     /// <summary>
-    /// Creates a push button that's tracked to a Monogame keyboard press
+    /// Creates a digital input port for the specified keyboard key
     /// </summary>
-    public PushButton BindKey(Keys key)
+    public IDigitalInputPort CreatePortForKey(Keys key)
     {
-        var port = _inputTracker.RegisterKey(key);
-        return new PushButton(port);
+        return _inputTracker.RegisterKey(key);
     }
 }

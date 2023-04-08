@@ -1,5 +1,6 @@
 ﻿using Meadow.Foundation;
 using Meadow.Foundation.Graphics;
+using Meadow.Foundation.Sensors.Buttons;
 using MeadowMgTestEnvironment;
 using Microsoft.Xna.Framework.Input;
 
@@ -26,7 +27,8 @@ var spacePressed = false;
 
 // When the user presses the space bar, set `spacePressed` to true.
 // Once the user releases the space bar, set it back to false.
-var spaceButton = environment.BindKey(Keys.Space);
+var spacePort = environment.CreatePortForKey(Keys.Space);
+var spaceButton = new PushButton(spacePort);
 spaceButton.PressStarted += (_, _) => spacePressed = true;
 spaceButton.PressEnded += (_, _) => spacePressed = false;
 
