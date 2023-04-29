@@ -38,6 +38,40 @@ internal class TextureTransferer
         }
     }
 
+    public void PushToTexture(IPixelBuffer frameBuffer, int left, int top, int right, int bottom)
+    {
+        left = Math.Max(left, 0);
+        right = Math.Min(right, frameBuffer.Width);
+        top = Math.Max(top, 0);
+        bottom = Math.Min(bottom, frameBuffer.Height);
+        var width = right - left;
+        var height = bottom - top;
+
+        if (width <= 0 || height <= 0)
+        {
+            // out of bounds
+            return;
+        }
+        
+        // We need a contiguous buffer that's *just* the pixels we want to write
+        var tempBuffer = new BufferRgb565(height, width);
+
+        for (var row = 0; row < height; row++)
+        for (var col = 0; col < width; col++)
+        {
+            var sourceIndex = (top + row) * frameBuffer.Width * 2 + (left + col) * 2;
+            var targetIndex = row * width * 2 + col * 2;
+
+            tempBuffer.Buffer[targetIndex] = frameBuffer.Buffer[sourceIndex];
+            tempBuffer.Buffer[targetIndex + 1] = frameBuffer.Buffer[sourceIndex + 1];
+        }
+
+        lock (_padlock)
+        {
+            _buffer.WriteBuffer(left, top, tempBuffer);
+        }
+    }
+
     /// <summary>
     /// Applies the currently saved RGBA8888 saved pixel data to the passed
     /// in monogame texture.

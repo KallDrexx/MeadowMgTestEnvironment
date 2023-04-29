@@ -47,7 +47,8 @@ public class MonogameDisplay : IGraphicsDisplay
 
     public void Show(int left, int top, int right, int bottom)
     {
-        throw new NotImplementedException();
+        _textureTransferer.PushToTexture(PixelBuffer, left, top, right, bottom);
+        Thread.Sleep(SleepAfterShow);
     }
 
     public void Clear(bool updateDisplay = false)

@@ -32,9 +32,12 @@ var spaceButton = new PushButton(spacePort);
 spaceButton.PressStarted += (_, _) => spacePressed = true;
 spaceButton.PressEnded += (_, _) => spacePressed = false;
 
+renderer.Clear(Color.Black);
+renderer.Show();
+
 while (true)
 {
-    renderer.Clear(Color.Black);
+    renderer.Clear(Color.Red);
     renderer.DrawRoundedRectangle(0, 0, 240, 239, 5, Color.Red);
     renderer.DrawCircle(50, 50, 25, Color.Aqua);
     
@@ -45,5 +48,5 @@ while (true)
         renderer.DrawText(10, 200, "Space pressed!");
     }
     
-    renderer.Show();
+    renderer.Show(40, 40, 55, 55);
 }
