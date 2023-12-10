@@ -3,7 +3,7 @@ using Meadow.Hardware;
 
 namespace MeadowMgTestEnvironment;
 
-public class KeyboardPort : IDigitalInputPort
+public class KeyboardPort : IDigitalInterruptPort
 {
     private DigitalState? _state;
     

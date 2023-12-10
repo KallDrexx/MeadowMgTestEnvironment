@@ -8,7 +8,7 @@ internal class InputTracker
 {
     private readonly ConcurrentDictionary<Keys, KeyboardPort> _trackedKeys = new();
 
-    public IDigitalInputPort RegisterKey(Keys key)
+    public IDigitalInterruptPort RegisterKey(Keys key)
     {
         var port = new KeyboardPort();
         _trackedKeys[key] = port;

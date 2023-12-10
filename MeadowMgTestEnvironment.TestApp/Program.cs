@@ -48,5 +48,8 @@ while (true)
         renderer.DrawText(10, 200, "Space pressed!");
     }
     
+    renderer.Show();
+    
+    renderer.Clear(Color.Black);
     renderer.Show(40, 40, 55, 55);
 }

@@ -38,7 +38,7 @@ public class TestEnvironment
     /// <summary>
     /// Creates a digital input port for the specified keyboard key
     /// </summary>
-    public IDigitalInputPort CreatePortForKey(Keys key)
+    public IDigitalInterruptPort CreatePortForKey(Keys key)
     {
         return _inputTracker.RegisterKey(key);
     }
