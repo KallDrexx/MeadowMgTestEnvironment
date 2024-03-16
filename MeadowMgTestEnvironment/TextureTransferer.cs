@@ -1,4 +1,5 @@
 ﻿using Meadow.Foundation.Graphics.Buffers;
+using Meadow.Peripherals.Displays;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MeadowMgTestEnvironment;

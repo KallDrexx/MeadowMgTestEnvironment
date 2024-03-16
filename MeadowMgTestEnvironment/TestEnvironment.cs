@@ -1,6 +1,5 @@
-﻿using Meadow.Foundation.Graphics;
-using Meadow.Foundation.Sensors.Buttons;
-using Meadow.Hardware;
+﻿using Meadow.Hardware;
+using Meadow.Peripherals.Displays;
 using Microsoft.Xna.Framework.Input;
 
 namespace MeadowMgTestEnvironment;
