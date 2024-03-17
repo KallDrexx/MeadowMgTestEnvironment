@@ -1,6 +1,8 @@
-﻿using Meadow.Foundation;
+﻿using Meadow;
+using Meadow.Foundation;
 using Meadow.Foundation.Graphics;
 using Meadow.Foundation.Graphics.Buffers;
+using Meadow.Peripherals.Displays;
 
 namespace MeadowMgTestEnvironment;
 
@@ -8,7 +10,7 @@ namespace MeadowMgTestEnvironment;
 /// Meadow `IGraphicsDisplay` implementation that feeds it's display to the
 /// running Monogame window.
 /// </summary>
-public class MonogameDisplay : IGraphicsDisplay
+public class MonogameDisplay : IPixelDisplay
 {
     private readonly TextureTransferer _textureTransferer;
    
@@ -111,4 +113,6 @@ public class MonogameDisplay : IGraphicsDisplay
             _ => throw new NotSupportedException($"Color mode {colorMode} is not supported"),
         };
     }
+
+
 }
