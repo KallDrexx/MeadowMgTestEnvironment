@@ -7,7 +7,7 @@ public class KeyboardPort : IDigitalInterruptPort
 {
     private DigitalState? _state;
     
-    public InterruptMode InterruptMode => InterruptMode.None;
+    public InterruptMode InterruptMode => InterruptMode.EdgeBoth;
     public TimeSpan DebounceDuration { get; set; } = TimeSpan.Zero;
     public TimeSpan GlitchDuration { get; set; } = TimeSpan.Zero;
     public ResistorMode Resistor { get; set; } = ResistorMode.Disabled;
